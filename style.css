@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+header {
+  height: fit-content;
+  margin: 2rem 0 2rem 0;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+main {
+  flex: 7;
+  justify-content: center;
+  display: flex;
+}
+
+[input] {
+  border: solid 2px gray;
+  border-radius: 25px;
+  height: 2.5rem;
+  max-width: 35rem;
+  justify-content: center;
+  align-items: right;
+}
+
+[input] svg {
+  margin-left: 7px;
+}
+
+[input] input {
+  border: none;
+  border-radius: 25px;
+  width: 33rem;
+  height: 2.5rem;
+  padding: 5px 10px 5px 10px;
+}
+
+[input] input:focus {
+  outline: none;
+}
+
+footer {
+  height: 1.5rem;
+  display: flex;
+  flex-direction: row;
+  background-color: lightgray;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border-top: solid 1px black;
+}
+
+footer section {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: var(--align);
+  align-items: center;
+  gap: 20px;
+}
+
+footer section a {
+}
+
+footer [divider] {
+  flex: 2;
+}
+
+section.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% - 128px);
+  height: calc(100% - 128px);
+  padding: 64px;
+  background-color: lightgray;
+}
+
+section.modal > div.modal-content {
+  width: calc(100% - 16px);
+  height: calc(100% - 16px);
+  padding: 8px;
+  background-color: white;
+}
+
+section.modal > div.modal-content > img.modal-close {
+  position: absolute;
+  top: 68px;
+  left: calc(100% - 93px);
+  width: 25px;
+  height: 25px;
+}
+
+section.modal > div.modal-content > .modal-content-content {
+  height: 100%;
+  width: auto;
+}
+
+[onclick] {
+  cursor: pointer;
+}
+
+a[href] {
+  cursor: pointer;
+}
+
+a.pHiOh {
+  color: blue;
+  text-decoration: underline;
+}
