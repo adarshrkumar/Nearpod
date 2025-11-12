@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Capture App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Photo Capture App</h1>
+
+        <div id="setup-screen" class="screen active">
+            <div class="input-group">
+                <label for="photo-count">How many photos do you want to take?</label>
+                <input type="number" id="photo-count" min="1" max="50" value="3">
+            </div>
+            <button id="start-btn" class="btn btn-primary">Start Capturing</button>
+        </div>
+
+        <div id="capture-screen" class="screen">
+            <div class="camera-container">
+                <video id="video" autoplay playsinline></video>
+                <canvas id="canvas" style="display: none;"></canvas>
+            </div>
+            <div class="capture-info">
+                <p id="capture-status">Initializing camera...</p>
+                <p id="photo-counter">Photos taken: <span id="current-count">0</span> / <span id="total-count">0</span></p>
+            </div>
+            <button id="capture-btn" class="btn btn-primary" disabled>Capture Photo</button>
+            <button id="done-btn" class="btn btn-secondary" style="display: none;">Done</button>
+        </div>
+
+        <div id="gallery-screen" class="screen">
+            <h2>Captured Photos</h2>
+            <div id="photo-gallery" class="photo-gallery"></div>
+            <div class="gallery-actions">
+                <button id="show-btn" class="btn btn-primary">Show Photos</button>
+                <button id="restart-btn" class="btn btn-secondary">Take More Photos</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
