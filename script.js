@@ -146,7 +146,8 @@ function takePhoto() {
 function finishCapture() {
     stopCamera();
     showScreen('gallery');
-    displayPhotos();
+    // Don't display photos automatically - user must click "Show Photos"
+    photoGallery.innerHTML = `<p class="no-photos">You have captured ${capturedPhotos.length} photo${capturedPhotos.length !== 1 ? 's' : ''}.<br>Click "Show Photos" to view them.</p>`;
 }
 
 // Stop camera stream
@@ -205,6 +206,7 @@ function restart() {
 
     captureBtn.disabled = true;
     doneBtn.style.display = 'none';
+    photoGallery.innerHTML = '';
 
     showScreen('setup');
 }
