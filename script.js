@@ -5,6 +5,7 @@ let currentPhotoIndex = 0;
 let stream = null;
 let videoElement = null;
 let canvasElement = null;
+let autoCaptureInterval = null;
 
 // DOM elements
 const setupScreen = document.getElementById('setup-screen');
@@ -51,10 +52,15 @@ async function startCapture() {
     // Request camera access
     try {
         await initializeCamera();
-        captureStatus.textContent = 'Camera ready! Click "Capture Photo" to take a picture.';
-        captureBtn.disabled = false;
+        captureBtn.style.display = 'none'; // Hide manual capture button
         totalCount.textContent = totalPhotos;
         currentCount.textContent = '0';
+
+        // Start countdown before automatic capture
+        await startCountdown();
+
+        // Begin automatic photo capture
+        startAutomaticCapture();
     } catch (error) {
         console.error('Error accessing camera:', error);
         captureStatus.textContent = 'Error accessing camera. Please ensure you have granted camera permissions.';
@@ -98,6 +104,31 @@ async function initializeCamera() {
     });
 }
 
+// Countdown before starting automatic capture
+async function startCountdown() {
+    for (let i = 3; i > 0; i--) {
+        captureStatus.textContent = `Starting in ${i}...`;
+        await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+}
+
+// Start automatic photo capture
+function startAutomaticCapture() {
+    // Take first photo immediately
+    takePhoto();
+
+    // If more photos needed, set up interval
+    if (totalPhotos > 1) {
+        autoCaptureInterval = setInterval(() => {
+            if (currentPhotoIndex < totalPhotos) {
+                takePhoto();
+            } else {
+                clearInterval(autoCaptureInterval);
+            }
+        }, 1500); // 1.5 second delay between photos
+    }
+}
+
 // Take a photo
 function takePhoto() {
     if (!stream) {
@@ -133,11 +164,14 @@ function takePhoto() {
 
         // Check if we've captured all photos
         if (currentPhotoIndex >= totalPhotos) {
-            captureStatus.textContent = `All ${totalPhotos} photos captured! Click "Done" to view them.`;
-            captureBtn.disabled = true;
-            doneBtn.style.display = 'inline-block';
+            captureStatus.textContent = `All ${totalPhotos} photos captured!`;
+            clearInterval(autoCaptureInterval);
+            // Automatically go to gallery after brief delay
+            setTimeout(() => {
+                finishCapture();
+            }, 1000);
         } else {
-            captureStatus.textContent = `Photo ${currentPhotoIndex} captured! Take photo ${currentPhotoIndex + 1} of ${totalPhotos}.`;
+            captureStatus.textContent = `Capturing photo ${currentPhotoIndex} of ${totalPhotos}...`;
         }
     }, 'image/jpeg', 0.95);
 }
@@ -152,6 +186,12 @@ function finishCapture() {
 
 // Stop camera stream
 function stopCamera() {
+    // Clear any active capture interval
+    if (autoCaptureInterval) {
+        clearInterval(autoCaptureInterval);
+        autoCaptureInterval = null;
+    }
+
     if (stream) {
         stream.getTracks().forEach(track => track.stop());
         stream = null;
@@ -195,6 +235,12 @@ function showPhotos() {
 
 // Restart the app
 function restart() {
+    // Clear any active capture interval
+    if (autoCaptureInterval) {
+        clearInterval(autoCaptureInterval);
+        autoCaptureInterval = null;
+    }
+
     // Clean up old photo URLs
     capturedPhotos.forEach(photo => {
         URL.revokeObjectURL(photo.url);
@@ -205,6 +251,7 @@ function restart() {
     totalPhotos = 0;
 
     captureBtn.disabled = true;
+    captureBtn.style.display = 'inline-block'; // Reset button visibility
     doneBtn.style.display = 'none';
     photoGallery.innerHTML = '';
 
