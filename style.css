@@ -58,6 +58,15 @@ h2 {
     display: block;
 }
 
+/* Visibility management using aria-hidden */
+[aria-hidden="true"] {
+    display: none;
+}
+
+[aria-hidden="false"] {
+    display: inline-block;
+}
+
 /* Setup screen */
 .input-group {
     text-align: center;

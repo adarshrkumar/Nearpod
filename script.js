@@ -52,7 +52,7 @@ async function startCapture() {
     // Request camera access
     try {
         await initializeCamera();
-        captureBtn.style.display = 'none'; // Hide manual capture button
+        captureBtn.setAttribute('aria-hidden', 'true'); // Hide manual capture button
         totalCount.textContent = totalPhotos;
         currentCount.textContent = '0';
 
@@ -251,8 +251,8 @@ function restart() {
     totalPhotos = 0;
 
     captureBtn.disabled = true;
-    captureBtn.style.display = 'inline-block'; // Reset button visibility
-    doneBtn.style.display = 'none';
+    captureBtn.setAttribute('aria-hidden', 'false'); // Reset button visibility
+    doneBtn.setAttribute('aria-hidden', 'true');
     photoGallery.innerHTML = '';
 
     showScreen('setup');
