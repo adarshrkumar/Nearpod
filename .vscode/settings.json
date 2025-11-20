@@ -1,0 +1,6 @@
+{
+  "html.validate.styles": true,
+  "html.validate.scripts": true,
+  "css.lint.compatibleVendorPrefixes": "warning",
+  "vscode-edge-devtools.webhint": false
+}
